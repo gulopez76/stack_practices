@@ -1,0 +1,15 @@
+FROM debian:10
+LABEL MAINTAINER="Guillem <gulopez76@gmail.com>"
+EXPOSE 80
+
+RUN apt-get update && \
+    apt-get -y install libapache2-mod-php apache2 php php-common && \
+    apt-get clean
+
+COPY index.php /var/www/html/ 
+
+ENTRYPOINT [ "/usr/sbin/apachectl", "-D", "FOREGROUND" ]
+
+USER root
+
+

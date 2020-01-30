@@ -1,0 +1,41 @@
+---
+version: "3.4"
+services:
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: dbdokuwiki
+      MYSQL_USER: billy
+      MYSQL_PASSWORD: 123456
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+     - /srv/dokuwiki/db:/var/lib/mysql
+    networks:
+     - backend
+
+  dokuwiki:
+    depends_on:
+      - db
+    image: dokuwiki
+    container_name: dokuwikiservices
+    environment:
+      - TZ=Europe/Paris
+    ports:
+      - 83:80
+    networks:
+      - backend
+      - proxy
+    deploy:
+      labels:
+        traefik.port: 80
+        traefik.frontend.rule: "Host:dokuwiki.192.168.40.211.nip.io"
+        traefik.docker.network: 'proxy'
+    restart: unless-stopped
+
+networks:
+  backend:
+    external: true
+  proxy:
+    external: true

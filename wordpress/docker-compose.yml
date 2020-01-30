@@ -1,0 +1,43 @@
+version: '3.3'
+
+services:
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: dbwordpress
+      MYSQL_USER: billy
+      MYSQL_PASSWORD: 123456
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    networks:
+     - backend
+
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: billy
+      WORDPRESS_DB_PASSWORD: 123456
+      WORDPRESS_DB_NAME: dbwordpress
+    networks:
+      - backend
+      - proxy
+    deploy:
+      labels:
+        traefik.port: 80
+        traefik.frontend.rule: "Host:blog.192.168.40.211.nip.io"
+        traefik.docker.network: 'proxy'
+
+
+volumes:
+  db_data: {}
+
+networks:
+  backend:
+    external: true
+  proxy:
+    external: true
