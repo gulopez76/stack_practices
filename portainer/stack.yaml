@@ -20,7 +20,7 @@ services:
       - portainer_agent
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /srv/portainer/data:/data
+      - /srv/docker/volumes/portainer/data:/data
     deploy:
       mode: replicated
       replicas: 1

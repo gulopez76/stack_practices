@@ -15,14 +15,14 @@ services:
     networks:
       - elasticsearch
     volumes:
-      - /srv/elasticsearch/data:/usr/share/elasticsearch/data
+      - /srv/docker/volumes/elasticsearch/data:/usr/share/elasticsearch/data
     deploy:
       replicas: 1
 
   logstash:
     image: docker.elastic.co/logstash/logstash-oss:6.2.2
     volumes:
-      - /srv/logstash/config:/usr/share/logstash/pipeline/
+      - /srv/docker/volumes/logstash/config:/usr/share/logstash/pipeline/
     depends_on:
       - elasticsearch
     networks:

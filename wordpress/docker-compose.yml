@@ -10,6 +10,8 @@ services:
       MYSQL_USER: billy
       MYSQL_PASSWORD: 123456
       MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - /srv/docker/volumes/mysql/data:/var/lib/mysql
     networks:
      - backend
 
@@ -23,6 +25,8 @@ services:
       WORDPRESS_DB_USER: billy
       WORDPRESS_DB_PASSWORD: 123456
       WORDPRESS_DB_NAME: dbwordpress
+    volumes:
+      - /srv/docker/volumes/wordpress/data:/var/www/html
     networks:
       - backend
       - proxy
