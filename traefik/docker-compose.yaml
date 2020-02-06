@@ -3,6 +3,8 @@ version: '3.5'
 services:
   traefik:
     image: library/traefik:1.7
+    environment:
+      LOGSPOUT: 'ignore' 
     command: 
       - "--api"
       - "--entrypoints=Name:http Address::80"
